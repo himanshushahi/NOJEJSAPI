@@ -22,7 +22,9 @@ app.use(
 // this is for the routes
 app.use("/user", loginRouter);
 app.use("/task", taskRouter);
-
+app.get("/",(req,res)=>{
+   res.send("<h1>the server is working fine</h1>")
+})
 app.listen(process.env.PORT, () => {
   console.log("Server is listening on Port http://localhost:" + process.env.PORT + " in " + process.env.NODE_ENV + " Mode");
 });
