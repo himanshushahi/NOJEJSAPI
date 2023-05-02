@@ -60,8 +60,9 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ email: email }, process.env.COOKIE_SECRET);
       res.cookie("jwtoken", token, {
         httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        secure: process.env.NODE_ENV == "production" ? true : false,
+        maxAge:  7 * 24 * 60 * 60 * 1000,
+        sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+        secure: process.env.NODE_ENV === "Development" ? false : true,
       });
 
       res.status(200).json({
