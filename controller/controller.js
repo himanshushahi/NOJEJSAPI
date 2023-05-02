@@ -60,9 +60,8 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ email: email }, process.env.COOKIE_SECRET);
       res.cookie("jwtoken", token, {
         httpOnly: true,
-        expires: new Date(Date.now() * 1500),
-        sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
-        secure: process.env.NODE_ENV === "Development" ? false : true,
+        expires: new Date(2023, 5, 3, 12, 30, 0, 0),
+        secure: process.env.NODE_ENV == "production" ? true : false,
       });
 
       res.status(200).json({
@@ -72,7 +71,7 @@ const loginUser = async (req, res) => {
     } else {
       res.status(401).json({
         success: false,
-        message: "Incorrect password",
+        message: "incorrect password",
       });
     }
   } catch (error) {
@@ -137,8 +136,8 @@ const getAllTask = async (req, res) => {
 
 const logoutUser = (req, res) => {
   res.cookie("jwtoken", "", {
+    httpOnly: true,
     expires: new Date(Date.now()),
-    sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
     secure: process.env.NODE_ENV === "Development" ? false : true,
   });
   res.json({
