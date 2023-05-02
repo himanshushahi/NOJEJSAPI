@@ -9,14 +9,11 @@ const app = express();
 // for connecting the server to the database
 connectDB();
 // to get the json data from frontend
-app.use(cors());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URI);
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
+app.use(cors({
+  origin: process.env.FRONTEND_URI,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -27,5 +24,5 @@ app.use("/user", loginRouter);
 app.use("/task", taskRouter);
 
 app.listen(process.env.PORT, () => {
-  console.log("Server is listing on Port http://localhost:" + process.env.PORT + " in " + process.env.NODE_ENV + " Mode");
+  console.log("Server is listening on Port http://localhost:" + process.env.PORT + " in " + process.env.NODE_ENV + " Mode");
 });
