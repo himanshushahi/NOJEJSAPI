@@ -1,11 +1,10 @@
 import User from "../models/user.js";
-import bcrypt from "bcrypt";
+import bcrypt, { compareSync } from "bcrypt";
 import jwt from "jsonwebtoken";
 import Task from "../models/task.js";
-import { json } from "express";
 
 const registerNewUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password,age,city,pin } = req.body;
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(password, salt);
   const findUser = await User.find({ email: email });
@@ -15,6 +14,9 @@ const registerNewUser = async (req, res) => {
         name,
         email,
         password: passwordHash,
+        age,
+        city,
+        pin
       });
 
       res.status(201).json({
@@ -65,6 +67,8 @@ const loginUser = async (req, res) => {
         secure: process.env.NODE_ENV === "Development" ? false : true,
       });
 
+      req.session.userId = user._id;
+
       res.status(200).json({
         success: true,
         message: "Welcome " + user.name,
@@ -97,7 +101,14 @@ const getMyDetails = async (req, res) => {
     const decoded = jwt.verify(token.jwtoken, process.env.COOKIE_SECRET);
     const data = await User.findOne({ email: decoded.email });
     res.json({
-      name: data.name,
+      success:true,
+      info:{
+        name:data.name,
+        email:data.email,
+        city:data.city,
+        pin:data.pin,
+        age:data.age
+      }
     });
   }
 };
@@ -137,16 +148,51 @@ const getAllTask = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-  res.cookie("jwtoken", "", {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-    secure: process.env.NODE_ENV === "Development" ? false : true,
-  });
-  res.json({
-    success: true,
-    message: "Logout Successfully",
-  });
+  try {
+    res.cookie("jwtoken", "", {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+      secure: process.env.NODE_ENV === "Development" ? false : true,
+    });
+    res.json({
+      success: true,
+      message: "Logout Successfully",
+    });
+  } catch (error) {
+    res.json({
+      success:false,
+      message:"internal server error"
+    })
+  }
+  
 };
+
+const updateUserDetails = async(req,res)=>{
+  try {
+    const {_id} = req.user;
+   const {name,age,city,pin} = req.body;
+   const user = await User.findByIdAndUpdate(_id,{
+    name,
+    age,
+    city,
+    pin
+   },{new:true})
+   if(user){
+    res.status(200).json({
+      success:true,
+      message:"Information Updated Successfully",
+      user
+    })
+   }
+  } catch (error) {
+    res.json({
+      success:false,
+      message:"Some error with updating the data"
+    })
+  }
+   
+   
+}
 
 export {
   registerNewUser,
@@ -155,4 +201,5 @@ export {
   addTodoTask,
   getAllTask,
   logoutUser,
+  updateUserDetails
 };

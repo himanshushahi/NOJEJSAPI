@@ -3,7 +3,6 @@ import User from "../models/user.js";
 
 export const isAuthenticated = async (req, res, next) => {
     const token = req.cookies;
-
     if(token.jwtoken === undefined){
      return res.json({
        success:false,

@@ -10,6 +10,18 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true
   },
+  age:{
+    type: Number,
+    required: true,
+  },
+  city:{
+    type:String,
+    required:true
+  },
+  pin:{
+    type:Number,
+    required:true,
+  },
   password: {
     type: String,
     required: true

@@ -4,6 +4,8 @@ import loginRouter from "./routes/loginRoute.js";
 import connectDB from "./db/database.js";
 import cookieParser from "cookie-parser";
 import taskRouter from "./routes/task.js";
+import session from "express-session";
+
 
 const app = express();
 // for connecting the server to the database
@@ -16,6 +18,14 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
+
+app.use(
+  session({
+    secret: "some-secret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // this is for the routes
 app.use("/user", loginRouter);
