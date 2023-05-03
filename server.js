@@ -19,12 +19,6 @@ app.use(
   })
 );
 
-loginRouter.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URI);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 // this is for the routes
 app.use("/user", loginRouter);
 app.use("/task", taskRouter);
@@ -32,5 +26,5 @@ app.get("/",(req,res)=>{
    res.send("<h1>the server is working fine</h1>")
 })
 app.listen(process.env.PORT, () => {
-  console.log("Server is listening on Port http://localhost:" + process.env.PORT + " in " + process.env.NODE_ENV + " Mode");
+  console.log("Server is listening on Port " + process.env.PORT + " in " + process.env.NODE_ENV + " Mode");
 });

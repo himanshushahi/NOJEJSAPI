@@ -3,15 +3,9 @@ import { getMyDetails, loginUser, logoutUser, registerNewUser } from '../control
 import { isAuthenticated } from '../middlewares/middleware.js';
 
 const router = express.Router();
-router.get("/",(req,res)=>{
-    res.json({
-        working:"fine"
-    })
-})
-
 
 router.post("/new",registerNewUser);
-router.post("/login",loginUser)
+router.post("/login",loginUser);
 
 router.get("/me",isAuthenticated,getMyDetails);
 
