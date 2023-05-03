@@ -4,7 +4,7 @@ import { isAuthenticated } from '../middlewares/middleware.js';
 
 const router = express.Router();
 
-router.post("/new",registerNewUser);
+router.post("/signup",registerNewUser);
 router.post("/login",loginUser);
 
 router.get("/me",isAuthenticated,getMyDetails);
