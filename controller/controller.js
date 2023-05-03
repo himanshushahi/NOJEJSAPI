@@ -67,8 +67,6 @@ const loginUser = async (req, res) => {
         secure: process.env.NODE_ENV === "Development" ? false : true,
       });
 
-      req.session.userId = user._id;
-
       res.status(200).json({
         success: true,
         message: "Welcome " + user.name,
