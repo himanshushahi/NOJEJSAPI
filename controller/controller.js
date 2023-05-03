@@ -1,7 +1,6 @@
 import User from "../models/user.js";
 import bcrypt, { compareSync } from "bcrypt";
 import jwt from "jsonwebtoken";
-import Task from "../models/task.js";
 
 const registerNewUser = async (req, res) => {
   const { name, email, password,age,city,pin } = req.body;
@@ -111,40 +110,6 @@ const getMyDetails = async (req, res) => {
   }
 };
 
-const addTodoTask = async (req, res) => {
-  const { task } = req.body;
-  const userID = req.user._id;
-
-  await Task.create({
-    task,
-    user: userID,
-  });
-
-  res.status(201).json({
-    success: true,
-    message: "Task Added Successfully",
-  });
-};
-
-const getAllTask = async (req, res) => {
-  const user = req.user;
-  const id = user._id;
-
-  const tasks = await Task.find({ user: id });
-
-  if (tasks.length < 1) {
-    return res.status(404).json({
-      success: false,
-      message: "Task Not Found",
-    });
-  } else {
-    res.status(200).json({
-      success: true,
-      tasks,
-    });
-  }
-};
-
 const logoutUser = (req, res) => {
   try {
     res.cookie("jwtoken", "", {
@@ -196,8 +161,6 @@ export {
   registerNewUser,
   loginUser,
   getMyDetails,
-  addTodoTask,
-  getAllTask,
   logoutUser,
   updateUserDetails
 };

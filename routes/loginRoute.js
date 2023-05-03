@@ -8,9 +8,9 @@ router.post("/signup",registerNewUser);
 router.post("/login",loginUser);
 
 router.get("/me",isAuthenticated,getMyDetails);
-router.put("/me",isAuthenticated,updateUserDetails)
+router.put("/me",isAuthenticated,updateUserDetails);
 
-router.get("/logout",isAuthenticated,logoutUser)
+router.get("/logout",isAuthenticated,logoutUser);
 
 
 export default router;
