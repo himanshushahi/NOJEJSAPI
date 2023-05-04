@@ -1,6 +1,6 @@
 import User from "../models/user.js";
-import bcrypt, { compareSync } from "bcrypt";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
 
 const registerNewUser = async (req, res) => {
   const { name, email, password,age,city,pin } = req.body;
@@ -39,7 +39,7 @@ const registerNewUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
+  
   try {
     // Find the user by email
     const user = await User.findOne({ email });
@@ -58,14 +58,7 @@ const loginUser = async (req, res) => {
     // If the passwords match, log in the user
     if (isMatch) {
       // Generate JWT token
-      const token = jwt.sign({ email: email }, process.env.COOKIE_SECRET);
-      res.cookie("jwtoken", token, {
-        httpOnly: true,
-        maxAge:  7 * 24 * 60 * 60 * 1000,
-        sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
-        secure: process.env.NODE_ENV === "Development" ? false : true,
-      });
-
+      req.session.email = email;
       res.status(200).json({
         success: true,
         message: "Welcome " + user.name,
@@ -87,48 +80,36 @@ const loginUser = async (req, res) => {
 
 
 const getMyDetails = async (req, res) => {
-  const token = req.cookies;
-console.log(token)
-  if (token.jwtoken === undefined) {
+  if (!req.session.email) {
     return res.json({
       success: false,
-      message: "Login First",
-    });
-  } else {
-    const decoded = jwt.verify(token.jwtoken, process.env.COOKIE_SECRET);
-    const data = await User.findOne({ email: decoded.email });
-    res.json({
-      success:true,
-      info:{
-        name:data.name,
-        email:data.email,
-        city:data.city,
-        pin:data.pin,
-        age:data.age
-      }
+      message: 'Login First',
     });
   }
+
+  const data = await User.findOne({ email: req.session.email });
+
+  res.json({
+    success: true,
+    info: {
+      name: data.name,
+      email: data.email,
+      city: data.city,
+      pin: data.pin,
+      age: data.age,
+    },
+  });
 };
 
-const logoutUser = (req, res) => {
-  try {
-    res.cookie("jwtoken", "", {
-      httpOnly: true,
-      expires: new Date(Date.now()),
-      secure: process.env.NODE_ENV === "Development" ? false : true,
-    });
-    res.json({
-      success: true,
-      message: "Logout Successfully",
-    });
-  } catch (error) {
-    res.json({
-      success:false,
-      message:"internal server error"
-    })
-  }
-  
+
+const logoutUser = async (req, res) => {
+  req.session.destroy();
+  res.json({
+    success: true,
+    message: 'Logout Successful',
+  });
 };
+
 
 const updateUserDetails = async(req,res)=>{
   try {
