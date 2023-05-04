@@ -57,7 +57,6 @@ const loginUser = async (req, res) => {
 
     // If the passwords match, log in the user
     if (isMatch) {
-      // Generate JWT token
       req.session.email = email;
       res.status(200).json({
         success: true,

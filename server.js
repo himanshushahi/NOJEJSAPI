@@ -15,9 +15,6 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
-
-// this is for the routes
-app.use("/user", loginRouter);
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -29,6 +26,10 @@ app.use(session({
     secure: process.env.NODE_ENV === 'development' ? false : true,
   }
 }));
+
+// this is for the routes
+app.use("/user", loginRouter);
+
 
 app.get("/",(req,res)=>{
    res.send("<h1>the server is working fine</h1>")
