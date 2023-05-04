@@ -88,7 +88,7 @@ const loginUser = async (req, res) => {
 
 const getMyDetails = async (req, res) => {
   const token = req.cookies;
-
+console.log(token)
   if (token.jwtoken === undefined) {
     return res.json({
       success: false,
