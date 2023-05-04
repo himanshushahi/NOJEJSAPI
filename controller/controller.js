@@ -57,11 +57,12 @@ const loginUser = async (req, res) => {
 
     // If the passwords match, log in the user
     if (isMatch) {
-      req.session.email = email;
-      res.status(200).json({
+      // req.session.email = email;
+      res.cookie("_email",email).status(200).json({
         success: true,
         message: "Welcome " + user.name,
       });
+
     } else {
       res.status(401).json({
         success: false,
@@ -79,14 +80,7 @@ const loginUser = async (req, res) => {
 
 
 const getMyDetails = async (req, res) => {
-  if (!req.session.email) {
-    return res.json({
-      success: false,
-      message: 'Login First',
-    });
-  }
-
-  const data = await User.findOne({ email: req.session.email });
+  const data = req.user
 
   res.json({
     success: true,

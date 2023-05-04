@@ -3,7 +3,6 @@ import cors from "cors";
 import loginRouter from "./routes/loginRoute.js";
 import connectDB from "./db/database.js";
 import cookieParser from "cookie-parser";
-import session from "express-session";
 const app = express();
 // for connecting the server to the database
 connectDB();
@@ -14,17 +13,6 @@ app.use(cors({
   origin: [process.env.FRONTEND_URI],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
-}));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    sameSite: process.env.NODE_ENV === 'development' ? 'lax' : 'none',
-    secure: process.env.NODE_ENV === 'development' ? false : true,
-  }
 }));
 
 // this is for the routes
