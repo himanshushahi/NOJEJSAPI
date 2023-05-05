@@ -85,33 +85,51 @@ const loginUser = async (req, res) => {
 };
 
 const getMyDetails = async (req, res) => {
-  const data = req.user;
-  res.json({
-    success: true,
-    info: {
-      name: data.name,
-      email: data.email,
-      city: data.city,
-      pin: data.pin,
-      age: data.age,
-    },
-  });
+  const {_email} = req.cookies ;
+  if (!_email) {
+    return res.json({
+      success: false,
+      message: "Login First"
+    });
+  } else {
+    const data = await User.findOne({ email: _email});
+    res.json({
+      success: true,
+      info: {
+        name: data.name,
+        email: data.email,
+        city: data.city,
+        pin: data.pin,
+        age: data.age,
+      },
+    });
+  }
+ 
 };
 
 const logoutUser = async (req, res) => {
-  req.session.destroy();
-  res.json({
-    success: true,
-    message: "Logout Successful",
-  });
+  const {_email} = req.cookies ;
+  if (!_email) {
+    return res.json({
+      success: false,
+      message: "Login First"
+    });
+  } else {
+    res.cookie("_email","",{
+      expires:new Date(Date.now())
+    }).json({
+      success: true,
+      message: "Logout Successfully",
+    });
+  }
+  
 };
 
 const updateUserDetails = async (req, res) => {
   try {
-    const { _id } = req.user;
+    const {_email} = req.cookies;
     const { name, age, city, pin } = req.body;
-    const user = await User.findByIdAndUpdate(
-      _id,
+    const user = await User.findOneAndUpdate({email:_email},
       {
         name,
         age,
