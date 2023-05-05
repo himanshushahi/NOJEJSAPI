@@ -87,12 +87,9 @@ const loginUser = async (req, res) => {
 const getMyDetails = async (req, res) => {
   const { _email } = req.cookies;
   const data = await User.findOne({ email: _email });
-  // res.status(200).json({
-  //   success: true,
-  //   data
-  // });
   res.json({
-    message:"this is from get my details"
+    success: true,
+    data,
   })
 };
 

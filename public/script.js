@@ -142,11 +142,12 @@ document.getElementById("fetchButton").addEventListener("click", async () => {
   );
 
   const data = await responce.json();
-  console.log(data.message);
   if (data.success) {
     Array.from(button).forEach((e) => {
       e.classList.add("display-none");
+      console.log(data.data)
     });
+   
   }
 
   const logoutButton = document.createElement("button");
