@@ -81,6 +81,13 @@ nav {
   gap: 15px;
 }
 
+.body div{
+  width: 100%;
+  padding: 5px 5px;
+  background-color: #3273a8;
+  color: white;
+}
+
 .container {
   background: #3273a8;
   border-radius: 0.5rem;

@@ -53,10 +53,7 @@ if (registerForm !== null) {
       body: jsonData,
     };
 
-    const recieveData = await fetch(
-      "/user/signup",
-      options
-    );
+    const recieveData = await fetch("/user/signup", options);
 
     const mainData = await recieveData.json();
 
@@ -114,10 +111,7 @@ if (loginForm !== null) {
       body: jsonData,
     };
 
-    const recieveData = await fetch(
-      "/user/login",
-      options
-    );
+    const recieveData = await fetch("/user/login", options);
 
     const mainData = await recieveData.json();
     if (mainData.success) {
@@ -129,36 +123,34 @@ if (loginForm !== null) {
 
 const button = document.getElementsByClassName("loginButton");
 
-document.getElementById("fetchButton").addEventListener("click", async () => {
+window.onload = async () => {
   const options = {
     method: "GET",
     "Content-Type": "Authorization",
-    credentials: "include"
+    credentials: "include",
   };
 
-  const responce = await fetch(
-    "/user/me",
-    options
-  );
+  const responce = await fetch("/user/me", options);
 
   const data = await responce.json();
   if (data.success) {
     Array.from(button).forEach((e) => {
       e.classList.add("display-none");
-      console.log(data.data)
     });
-   
+    document.getElementById(
+      "data-div"
+    ).innerHTML = `<div>${data.data.name}</div>
+    <div>${data.data.email}</div><div>${data.data.age}</div><div>${data.data.city}</div></div><div>${data.data.pin}</div>`;
   }
 
   const logoutButton = document.createElement("button");
 
   logoutButton.id = "#logoutButton";
   logoutButton.className = "btn2";
-  logoutButton.textContent = "Logout"
+  logoutButton.textContent = "Logout";
 
   document.querySelector(".Right-nav").append(logoutButton);
 
-  
   if (logoutButton !== null) {
     logoutButton.addEventListener("click", async () => {
       const options = {
@@ -182,7 +174,7 @@ document.getElementById("fetchButton").addEventListener("click", async () => {
       }
     });
   }
-});
+};
 
 // const imageInput = document.getElementById('imageInput');
 // const imagePreview = document.getElementById('imagePreview');
