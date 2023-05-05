@@ -1,16 +1,23 @@
-import express from 'express';
-import { getMyDetails, loginUser, logoutUser, registerNewUser,updateUserDetails } from '../controller/controller.js';
-import { isAuthenticated } from '../middlewares/middleware.js';
+import express from "express";
+import {
+  getMyDetails,
+  loginUser,
+  logoutUser,
+  registerNewUser,
+  updateUserDetails,
+} from "../controller/controller.js";
+import { isAuthenticated } from "../middlewares/middleware.js";
 
 const router = express.Router();
 
-router.post("/signup",registerNewUser);
-router.post("/login",loginUser);
+router.post("/signup", registerNewUser).get((req, res) => {
+    res.sendFile("public/register.html");
+  });
+router.post("/login", loginUser);
 
-router.get("/me",isAuthenticated,getMyDetails);
-router.put("/me",isAuthenticated,updateUserDetails);
+router.get("/me", isAuthenticated, getMyDetails);
+router.put("/me", isAuthenticated, updateUserDetails);
 
-router.get("/logout",isAuthenticated,logoutUser);
-
+router.get("/logout", isAuthenticated, logoutUser);
 
 export default router;

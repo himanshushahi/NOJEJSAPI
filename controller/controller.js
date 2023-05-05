@@ -1,9 +1,8 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
-
 const registerNewUser = async (req, res) => {
-  const { name, email, password,age,city,pin } = req.body;
+  const { name, email, password, age, city, pin } = req.body;
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(password, salt);
   const findUser = await User.find({ email: email });
@@ -15,7 +14,7 @@ const registerNewUser = async (req, res) => {
         password: passwordHash,
         age,
         city,
-        pin
+        pin,
       });
 
       res.status(201).json({
@@ -39,7 +38,7 @@ const registerNewUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  
+
   try {
     // Find the user by email
     const user = await User.findOne({ email });
@@ -58,11 +57,19 @@ const loginUser = async (req, res) => {
     // If the passwords match, log in the user
     if (isMatch) {
       // req.session.email = email;
-      res.cookie("_email",email).status(200).json({
-        success: true,
-        message: "Welcome " + user.name,
-      });
+      res
+        .cookie("_email", email, {
+          httpOnly: true,
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+          sameSite: "strict",
+          secure: true,
+        })
 
+        .status(200)
+        .json({
+          success: true,
+          message: "Welcome " + user.name,
+        });
     } else {
       res.status(401).json({
         success: false,
@@ -78,9 +85,8 @@ const loginUser = async (req, res) => {
   }
 };
 
-
 const getMyDetails = async (req, res) => {
-  const data = req.user
+  const data = req.user;
 
   res.json({
     success: true,
@@ -94,47 +100,47 @@ const getMyDetails = async (req, res) => {
   });
 };
 
-
 const logoutUser = async (req, res) => {
   req.session.destroy();
   res.json({
     success: true,
-    message: 'Logout Successful',
+    message: "Logout Successful",
   });
 };
 
-
-const updateUserDetails = async(req,res)=>{
+const updateUserDetails = async (req, res) => {
   try {
-    const {_id} = req.user;
-   const {name,age,city,pin} = req.body;
-   const user = await User.findByIdAndUpdate(_id,{
-    name,
-    age,
-    city,
-    pin
-   },{new:true})
-   if(user){
-    res.status(200).json({
-      success:true,
-      message:"Information Updated Successfully",
-      user
-    })
-   }
+    const { _id } = req.user;
+    const { name, age, city, pin } = req.body;
+    const user = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        age,
+        city,
+        pin,
+      },
+      { new: true }
+    );
+    if (user) {
+      res.status(200).json({
+        success: true,
+        message: "Information Updated Successfully",
+        user,
+      });
+    }
   } catch (error) {
     res.json({
-      success:false,
-      message:"Some error with updating the data"
-    })
+      success: false,
+      message: "Some error with updating the data",
+    });
   }
-   
-   
-}
+};
 
 export {
   registerNewUser,
   loginUser,
   getMyDetails,
   logoutUser,
-  updateUserDetails
+  updateUserDetails,
 };
