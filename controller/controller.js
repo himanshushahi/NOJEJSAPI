@@ -87,7 +87,7 @@ const loginUser = async (req, res) => {
 
 const getMyDetails = async (req, res) => {
   const data = req.user;
-
+ console.log(data)
   res.json({
     success: true,
     info: {
