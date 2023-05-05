@@ -215,27 +215,27 @@ window.onload = async () => {
 
       const mainData = await recieveData.json();
       console.log(mainData);
-      if (mainData.success) {
-        console.log(mainData.message);
-        data.innerHTML = `<table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Age</th>
-            <th>City</th>
-            <th>Pin</th>
-        </tr>
-        <tr>
-            <td id="nameTd">${mainData.user.name}</td>
-            <td id="emailTd">${mainData.user.email}</td>
-            <td id="ageTd">${mainData.user.age}</td>
-            <td id="cityTd">${mainData.user.city}</td>
-            <td id="pinTd">${mainData.user.pin}</td>
-        </tr>
-    </table> <button class="btn2" id="edit">Edit</button>`;
-      } else {
-        console.log(mainData.message);
-      }
+    //   if (mainData.success) {
+    //     console.log(mainData.message);
+    //     data.innerHTML = `<table>
+    //     <tr>
+    //         <th>Name</th>
+    //         <th>Email</th>
+    //         <th>Age</th>
+    //         <th>City</th>
+    //         <th>Pin</th>
+    //     </tr>
+    //     <tr>
+    //         <td id="nameTd">${mainData.user.name}</td>
+    //         <td id="emailTd">${mainData.user.email}</td>
+    //         <td id="ageTd">${mainData.user.age}</td>
+    //         <td id="cityTd">${mainData.user.city}</td>
+    //         <td id="pinTd">${mainData.user.pin}</td>
+    //     </tr>
+    // </table> <button class="btn2" id="edit">Edit</button>`;
+    //   } else {
+    //     console.log(mainData.message);
+    //   }
     });
   }
 
@@ -258,8 +258,8 @@ window.onload = async () => {
         Array.from(button).forEach((e) => {
           e.classList.remove("display-none");
         });
-
         e.target.classList.add("display-none");
+        location.reload();
       }
     });
   }
