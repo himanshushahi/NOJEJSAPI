@@ -132,7 +132,8 @@ const button = document.getElementsByClassName("loginButton");
 document.getElementById("fetchButton").addEventListener("click", async () => {
   const options = {
     method: "GET",
-    "Content-Type": "Authorization"
+    "Content-Type": "Authorization",
+    credentials: "include"
   };
 
   const responce = await fetch(
