@@ -54,7 +54,7 @@ if (registerForm !== null) {
     };
 
     const recieveData = await fetch(
-      "https://nodejsapi-j1tt.onrender.com/user/signup",
+      "/user/signup",
       options
     );
 
@@ -115,7 +115,7 @@ if (loginForm !== null) {
     };
 
     const recieveData = await fetch(
-      "https://nodejsapi-j1tt.onrender.com/user/login",
+      "/user/login",
       options
     );
 
@@ -135,7 +135,7 @@ document.getElementById("fetchButton").addEventListener("click", async () => {
   };
 
   const responce = await fetch(
-    "https://nodejsapi-j1tt.onrender.com/user/me",
+    "/user/me",
     options
   );
 
@@ -164,7 +164,7 @@ document.getElementById("fetchButton").addEventListener("click", async () => {
         credentials: "include",
       };
 
-      const data = await fetch("https://nodejsapi-j1tt.onrender.com/user/logout", options);
+      const data = await fetch("/user/logout", options);
 
       const mainData = await data.json();
       console.log(mainData);
