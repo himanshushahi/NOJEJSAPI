@@ -166,7 +166,7 @@ window.onload = async () => {
   const editButton = document.getElementById("edit");
   if (editButton !== null) {
     editButton.addEventListener("click", () => {
-      dataDiv.innerHTML = `<form id="updateForm">
+      dataDiv.innerHTML = `<div id="updateForm">
       <h1>Update</h1>
       <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${
         document.getElementById("nameTd").innerText
@@ -184,14 +184,13 @@ window.onload = async () => {
         document.getElementById("pinTd").innerText
       )}>
       <button type="submit" id="updateButton" class="btn">Update</button>
-  </form>`;
+  </div>`;
     });
   }
 
-  let updateForm = document.getElementById("updateForm");
-  if (updateForm !== null) {
-    updateForm.addEventListener("submit", async (e) => {
-      alert("update button clicked")
+  let updateButton = document.getElementById("updateButton");
+  if (updateButton !== null) {
+    updateButton.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
         name: document.getElementById("name").value,
@@ -215,7 +214,6 @@ window.onload = async () => {
       const recieveData = await fetch("/user/me", options);
 
       const mainData = await recieveData.json();
-      console.log(mainData);
       if (mainData.success) {
         console.log(mainData.message);
         data.innerHTML = `<table>
