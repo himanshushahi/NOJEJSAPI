@@ -122,7 +122,7 @@ if (loginForm !== null) {
 }
 
 const button = document.getElementsByClassName("loginButton");
-
+const dataDiv = document.getElementById("data-div");
 window.onload = async () => {
   const options = {
     method: "GET",
@@ -137,12 +137,90 @@ window.onload = async () => {
     Array.from(button).forEach((e) => {
       e.classList.add("display-none");
     });
-    document.getElementById(
-      "data-div"
-    ).innerHTML = `<div>${data.data.name}</div>
-    <div>${data.data.email}</div><div>${data.data.age}</div><div>${data.data.city}</div></div><div>${data.data.pin}</div>`;
+    dataDiv.innerHTML = `<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>City</th>
+        <th>Pin</th>
+    </tr>
+    <tr>
+        <td>${data.data.name}</td>
+        <td>${data.data.email}</td>
+        <td>${data.data.Age}</td>
+        <td>${data.data.city}</td>
+        <td>${data.data.pin}</td>
+    </tr>
+</table> <button class="btn2" id="edit">Edit</button>`;
   }
 
+  const editButton = document.getElementById("edit");
+  if (editButton !== null) {
+    editButton.addEventListener("click", () => {
+      dataDiv.innerHTML = "";
+      dataDiv.innerHTML = `<form id="updateForm">
+      <h1>Update</h1>
+      <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
+      <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${data.data.email}>
+      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
+      <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.pin}>
+      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
+      <button type="submit" id="updateButton" class="btn">Update</button>
+  </form>`;
+    });
+  }
+
+  let updateForm = document.getElementById("updateForm");
+  if (updateForm !== null) {
+    updateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        age: document.getElementById("age").value,
+        city: document.getElementById("city").value,
+        pin: document.getElementById("pin").value,
+      };
+
+      const jsonData = JSON.stringify(data);
+
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: jsonData,
+      };
+
+      const recieveData = await fetch("/user/me", options);
+
+      const mainData = await recieveData.json();
+      if (mainData.success) {
+        alert(mainData.message);
+        dataDiv.innerHTML = "";
+        data.innerHTML = `<table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>City</th>
+            <th>Pin</th>
+        </tr>
+        <tr>
+            <td>${mainData.user.name}</td>
+            <td>${mainData.user.email}</td>
+            <td>${mainData.user.Age}</td>
+            <td>${mainData.user.city}</td>
+            <td>${mainData.user.pin}</td>
+        </tr>
+    </table> <button class="btn2" id="edit">Edit</button>`;
+      } else {
+        alert(mainData.message);
+      }
+    });
+  }
   const logoutButton = document.createElement("button");
 
   logoutButton.id = "#logoutButton";

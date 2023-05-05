@@ -115,11 +115,12 @@ const logoutUser = async (req, res) => {
 const updateUserDetails = async (req, res) => {
   try {
     const { _email } = req.cookies;
-    const { name, age, city, pin } = req.body;
+    const { name ,email, age, city, pin } = req.body;
     const user = await User.findOneAndUpdate(
       { email: _email },
       {
         name,
+        email,
         age,
         city,
         pin,
