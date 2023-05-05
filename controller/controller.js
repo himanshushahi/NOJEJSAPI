@@ -86,6 +86,7 @@ const loginUser = async (req, res) => {
 
 const getMyDetails = async (req, res) => {
   const {_email} = req.cookies ;
+  console.log(_email)
   if (!_email) {
     return res.json({
       success: false,
@@ -93,6 +94,7 @@ const getMyDetails = async (req, res) => {
     });
   } else {
     const data = await User.findOne({ email: _email});
+    console.log(data)
     res.json({
       success: true,
       info: {
