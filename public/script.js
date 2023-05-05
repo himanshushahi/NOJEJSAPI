@@ -124,6 +124,11 @@ if (loginForm !== null) {
 const button = document.getElementsByClassName("loginButton");
 const dataDiv = document.getElementById("data-div");
 window.onload = async () => {
+  const logoutButton = document.createElement("button");
+  logoutButton.id = "#logoutButton";
+  logoutButton.className = "btn2";
+  logoutButton.textContent = "Logout";
+
   const options = {
     method: "GET",
     "Content-Type": "Authorization",
@@ -137,6 +142,9 @@ window.onload = async () => {
     Array.from(button).forEach((e) => {
       e.classList.add("display-none");
     });
+
+    document.querySelector(".Right-nav").append(logoutButton);
+
     dataDiv.innerHTML = `<table>
     <tr>
         <th>Name</th>
@@ -160,11 +168,21 @@ window.onload = async () => {
     editButton.addEventListener("click", () => {
       dataDiv.innerHTML = `<form id="updateForm">
       <h1>Update</h1>
-      <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${document.getElementById("nameTd").innerText}>
-      <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${document.getElementById("emailTd").innerText}>
-      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${Number.parseInt(document.getElementById("ageTd").innerText)}>
-      <input type="text" name="city" id="city" placeholder="Enter Your City" value=${document.getElementById("cityTd").innerText}>
-      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${Number.parseInt(document.getElementById("pinTd").innerText)}>
+      <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${
+        document.getElementById("nameTd").innerText
+      }>
+      <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${
+        document.getElementById("emailTd").innerText
+      }>
+      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${Number.parseInt(
+        document.getElementById("ageTd").innerText
+      )}>
+      <input type="text" name="city" id="city" placeholder="Enter Your City" value=${
+        document.getElementById("cityTd").innerText
+      }>
+      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${Number.parseInt(
+        document.getElementById("pinTd").innerText
+      )}>
       <button type="submit" id="updateButton" class="btn">Update</button>
   </form>`;
     });
@@ -196,7 +214,7 @@ window.onload = async () => {
       const recieveData = await fetch("/user/me", options);
 
       const mainData = await recieveData.json();
-      console.log(mainData)
+      console.log(mainData);
       if (mainData.success) {
         console.log(mainData.message);
         data.innerHTML = `<table>
@@ -220,13 +238,6 @@ window.onload = async () => {
       }
     });
   }
-  const logoutButton = document.createElement("button");
-
-  logoutButton.id = "#logoutButton";
-  logoutButton.className = "btn2";
-  logoutButton.textContent = "Logout";
-
-  document.querySelector(".Right-nav").append(logoutButton);
 
   if (logoutButton !== null) {
     logoutButton.addEventListener("click", async (e) => {
