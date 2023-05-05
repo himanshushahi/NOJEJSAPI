@@ -196,9 +196,9 @@ window.onload = async () => {
       const recieveData = await fetch("/user/me", options);
 
       const mainData = await recieveData.json();
+      console.log(mainData)
       if (mainData.success) {
-        alert(mainData.message);
-        dataDiv.innerHTML = "";
+        console.log(mainData.message);
         data.innerHTML = `<table>
         <tr>
             <th>Name</th>
@@ -216,7 +216,7 @@ window.onload = async () => {
         </tr>
     </table> <button class="btn2" id="edit">Edit</button>`;
       } else {
-        alert(mainData.message);
+        console.log(mainData.message);
       }
     });
   }
