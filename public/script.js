@@ -229,7 +229,8 @@ window.onload = async () => {
   document.querySelector(".Right-nav").append(logoutButton);
 
   if (logoutButton !== null) {
-    logoutButton.addEventListener("click", async () => {
+    logoutButton.addEventListener("click", async (e) => {
+      e.preventDefault();
       const options = {
         method: "GET",
         "Content-Type": "Authorization",
@@ -246,8 +247,8 @@ window.onload = async () => {
         Array.from(button).forEach((e) => {
           e.classList.remove("display-none");
         });
-        localStorage.removeItem("name");
-        location.reload();
+
+        e.target.classList.add("display-none");
       }
     });
   }
