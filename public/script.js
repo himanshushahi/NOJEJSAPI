@@ -162,9 +162,9 @@ window.onload = async () => {
       <h1>Update</h1>
       <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${document.getElementById("nameTd").innerText}>
       <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${document.getElementById("emailTd").innerText}>
-      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${document.getElementById("ageTd").innerText}>
+      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${Number.parseInt(document.getElementById("ageTd").innerText)}>
       <input type="text" name="city" id="city" placeholder="Enter Your City" value=${document.getElementById("cityTd").innerText}>
-      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${document.getElementById("pinTd").innerText}>
+      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${Number.parseInt(document.getElementById("pinTd").innerText)}>
       <button type="submit" id="updateButton" class="btn">Update</button>
   </form>`;
     });
@@ -172,8 +172,8 @@ window.onload = async () => {
 
   let updateForm = document.getElementById("updateForm");
   if (updateForm !== null) {
-    updateForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    updateForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
       const data = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
