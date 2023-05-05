@@ -166,7 +166,7 @@ window.onload = async () => {
   const editButton = document.getElementById("edit");
   if (editButton !== null) {
     editButton.addEventListener("click", () => {
-      dataDiv.innerHTML = `<div id="updateForm">
+      dataDiv.innerHTML = `<form id="updateForm">
       <h1>Update</h1>
       <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${
         document.getElementById("nameTd").innerText
@@ -184,13 +184,13 @@ window.onload = async () => {
         document.getElementById("pinTd").innerText
       )}>
       <button type="submit" id="updateButton" class="btn">Update</button>
-  </div>`;
+  </form>`;
     });
   }
 
   let updateButton = document.getElementById("updateButton");
   if (updateButton !== null) {
-    updateButton.addEventListener("submit", async (e) => {
+    updateButton.addEventListener("click", async (e) => {
       e.preventDefault();
       const data = {
         name: document.getElementById("name").value,
