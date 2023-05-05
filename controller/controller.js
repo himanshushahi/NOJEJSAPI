@@ -56,7 +56,6 @@ const loginUser = async (req, res) => {
 
     // If the passwords match, log in the user
     if (isMatch) {
-      // req.session.email = email;
       res
         .cookie("_email", email, {
           httpOnly: true,
@@ -87,7 +86,6 @@ const loginUser = async (req, res) => {
 
 const getMyDetails = async (req, res) => {
   const data = req.user;
- console.log(data)
   res.json({
     success: true,
     info: {
