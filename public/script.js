@@ -146,11 +146,11 @@ window.onload = async () => {
         <th>Pin</th>
     </tr>
     <tr>
-        <td>${data.data.name}</td>
-        <td>${data.data.email}</td>
-        <td>${data.data.Age}</td>
-        <td>${data.data.city}</td>
-        <td>${data.data.pin}</td>
+        <td id="nameTd">${data.data.name}</td>
+        <td id="emailTd">${data.data.email}</td>
+        <td id="ageTd">${data.data.age}</td>
+        <td id="cityTd">${data.data.city}</td>
+        <td id="pinTd">${data.data.pin}</td>
     </tr>
 </table> <button class="btn2" id="edit">Edit</button>`;
   }
@@ -161,11 +161,11 @@ window.onload = async () => {
       dataDiv.innerHTML = "";
       dataDiv.innerHTML = `<form id="updateForm">
       <h1>Update</h1>
-      <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
-      <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${data.data.email}>
-      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
-      <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.pin}>
-      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
+      <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${document.getElementById("nameTd").innerText}>
+      <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${document.getElementById("emailTd").innerText}>
+      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${document.getElementById("ageTd").innerText}>
+      <input type="text" name="city" id="city" placeholder="Enter Your City" value=${document.getElementById("cityTd").innerText}>
+      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${document.getElementById("pinTd").innerText}>
       <button type="submit" id="updateButton" class="btn">Update</button>
   </form>`;
     });
@@ -209,11 +209,11 @@ window.onload = async () => {
             <th>Pin</th>
         </tr>
         <tr>
-            <td>${mainData.user.name}</td>
-            <td>${mainData.user.email}</td>
-            <td>${mainData.user.Age}</td>
-            <td>${mainData.user.city}</td>
-            <td>${mainData.user.pin}</td>
+            <td id="nameTd">${mainData.user.name}</td>
+            <td id="emailTd">${mainData.user.email}</td>
+            <td id="ageTd">${mainData.user.age}</td>
+            <td id="cityTd">${mainData.user.city}</td>
+            <td id="pinTd">${mainData.user.pin}</td>
         </tr>
     </table> <button class="btn2" id="edit">Edit</button>`;
       } else {
