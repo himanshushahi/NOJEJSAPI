@@ -1,3 +1,4 @@
+const button = document.getElementsByClassName("loginButton");
 window.onload = async () => {
   const options = {
     method: "GET",
@@ -9,6 +10,17 @@ window.onload = async () => {
 
   const data = await responce.json();
   if (data.success) {
+    Array.from(button).forEach((e) => {
+      e.classList.add("display-none");
+    });
+
+    const logoutButton = document.createElement("button");
+    logoutButton.id = "#logoutButton";
+    logoutButton.className = "btn2";
+    logoutButton.textContent = "Logout";
+    document.querySelector("#buttonSpan").append(logoutButton);
+    
+    document.querySelector(".userName").textContent = data.data.name;
     document.getElementById("update-div").innerHTML = `<form id="updateForm">
     <h1>Update</h1>
     <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
