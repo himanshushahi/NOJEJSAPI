@@ -143,8 +143,8 @@ window.onload = async () => {
       e.classList.add("display-none");
     });
 
-    document.querySelector(".Right-nav").append(logoutButton);
-
+    document.querySelector("#buttonSpan").append(logoutButton);
+    document.querySelector(".userName").textContent = "Welcome " + data.data.name;
     dataDiv.innerHTML = `<table>
     <tr>
         <th>Name</th>
@@ -205,4 +205,3 @@ window.onload = async () => {
 
 //   reader.readAsDataURL(file);
 // });
-

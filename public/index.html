@@ -11,17 +11,40 @@
 
 <body>
     <nav>
-        <h1 class="h1">ToDo List</h1>
+        <h1 class="h1" style="text-align: center;">User Info</h1>
         <div class="Right-nav">
-            <input type="text" id="Search-field" placeholder="i.e.:World">
-            <input type="submit" id="search" class="btn2 search" value="Search">
-            <a href="/signup" class="btn2 loginButton">SignUp</a>
+            <span class="userName"></span>
+            <span id="buttonSpan">
+                <a href="/signup" class="btn2 loginButton">SignUp</a>
             <a href="/login" class="btn2 loginButton">Login</a>
+            </span>
         </div>
     </nav>
 
     <div class="body" id="data-div">
-            
+        <table>
+            <tr>
+                <th>Name</th>
+                <td id="nameTd">${data.data.name}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td id="emailTd">${data.data.email}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td id="ageTd">${data.data.age}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td id="cityTd">${data.data.city}</td>
+            </tr>
+            <tr>
+                <th>Pin</th>
+                <td id="pinTd">${data.data.pin}</td>
+            </tr>
+
+        </table> <a class="btn2" id="edit" href="/update">Edit</a>
     </div>
     <footer>
         &copy; Copyright by Himanshu Kumar Shahi Front-End Developer
