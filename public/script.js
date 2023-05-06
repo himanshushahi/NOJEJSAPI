@@ -236,8 +236,8 @@ window.onload = async () => {
 
 let updateButton = document.getElementById("updateButton");
 if (updateButton !== null) {
-  updateButton.addEventListener("click", async (e) => {
-    e.preventDefault();
+  updateButton.addEventListener("click", async () => {
+    alert("the update button clicked")
     const data = {
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
@@ -261,7 +261,7 @@ if (updateButton !== null) {
 
     const mainData = await recieveData.json();
     if (mainData.success) {
-      console.log(mainData.message);
+      alert(mainData.message);
       data.innerHTML = `<table>
       <tr>
           <th>Name</th>
@@ -279,7 +279,7 @@ if (updateButton !== null) {
       </tr>
   </table> <button class="btn2" id="edit">Edit</button>`;
     } else {
-      console.log(mainData.message);
+      alert(mainData.message);
     }
   });
 }
