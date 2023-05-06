@@ -166,7 +166,7 @@ window.onload = async () => {
   const editButton = document.getElementById("edit");
   if (editButton !== null) {
     editButton.addEventListener("click", () => {
-      dataDiv.innerHTML = `<form id="updateForm">
+      dataDiv.innerHTML = `<form id="updateButton">
       <h1>Update</h1>
       <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${
         document.getElementById("nameTd").innerText
