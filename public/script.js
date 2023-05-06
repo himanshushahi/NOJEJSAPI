@@ -144,22 +144,30 @@ window.onload = async () => {
     });
 
     document.querySelector("#buttonSpan").append(logoutButton);
-    document.querySelector(".userName").textContent = "Welcome " + data.data.name;
-    dataDiv.innerHTML = `<table>
+    document.querySelector(".userName").textContent =
+      "Welcome " + data.data.name;
+    dataDiv.innerHTML = ` <table>
     <tr>
         <th>Name</th>
-        <th>Email</th>
-        <th>Age</th>
-        <th>City</th>
-        <th>Pin</th>
+        <td id="nameTd">${data.data.name}</td>
     </tr>
     <tr>
-        <td id="nameTd">${data.data.name}</td>
+        <th>Email</th>
         <td id="emailTd">${data.data.email}</td>
+    </tr>
+    <tr>
+        <th>Age</th>
         <td id="ageTd">${data.data.age}</td>
+    </tr>
+    <tr>
+        <th>City</th>
         <td id="cityTd">${data.data.city}</td>
+    </tr>
+    <tr>
+        <th>Pin</th>
         <td id="pinTd">${data.data.pin}</td>
     </tr>
+
 </table> <a class="btn2" id="edit" href="/update">Edit</a>`;
   }
 
