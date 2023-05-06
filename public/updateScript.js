@@ -1,4 +1,4 @@
-const button = document.getElementsByClassName("loginButton");
+
 window.onload = async () => {
   const options = {
     method: "GET",
