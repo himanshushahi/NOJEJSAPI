@@ -165,17 +165,17 @@ window.onload = async () => {
 
   const editButton = document.getElementById("edit");
   if (editButton !== null) {
-    editButton.addEventListener("click",async () => {
+    editButton.addEventListener("click", async () => {
       const options = {
         method: "GET",
         "Content-Type": "Authorization",
         credentials: "include",
       };
-    
+
       const responce = await fetch("/user/me", options);
-    
+
       const data = await responce.json();
-      if(data.success){
+      if (data.success) {
         dataDiv.innerHTML = `<form id="updateForm">
         <h1>Update</h1>
         <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
@@ -183,10 +183,9 @@ window.onload = async () => {
         <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
         <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.city}>
         <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
-        <button type="submit" id="updateButton" class="btn">Update</button>
+        <button type="submit" id="updateForm" class="btn">Update</button>
     </form>`;
       }
-      
     });
   }
 
@@ -233,54 +232,74 @@ window.onload = async () => {
 //   reader.readAsDataURL(file);
 // });
 
+// let updateForm = document.getElementById("updateForm");
+// if (updateForm !== null) {
+//   updateForm.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+//     const data = {
+//       name: document.getElementById("name").value,
+//       email: document.getElementById("email").value,
+//       age: document.getElementById("age").value,
+//       city: document.getElementById("city").value,
+//       pin: document.getElementById("pin").value,
+//     };
 
-let updateButton = document.getElementById("updateButton");
-if (updateButton !== null) {
-  updateButton.addEventListener("click", async (e) => {
-    e.preventDefault();
-    alert("the update button clicked")
-  //   const data = {
-  //     name: document.getElementById("name").value,
-  //     email: document.getElementById("email").value,
-  //     age: document.getElementById("age").value,
-  //     city: document.getElementById("city").value,
-  //     pin: document.getElementById("pin").value,
-  //   };
+//     const jsonData = JSON.stringify(data);
 
-  //   const jsonData = JSON.stringify(data);
+//     const options = {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       credentials: "include",
+//       body: jsonData,
+//     };
 
-  //   const options = {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include",
-  //     body: jsonData,
-  //   };
+//     const recieveData = await fetch("/user/me", options);
 
-  //   const recieveData = await fetch("/user/me", options);
+//     const mainData = await recieveData.json();
+//     if (mainData.success) {
+//       alert(mainData.message)
+//       data.innerHTML = `<table>
+//       <tr>
+//           <th>Name</th>
+//           <th>Email</th>
+//           <th>Age</th>
+//           <th>City</th>
+//           <th>Pin</th>
+//       </tr>
+//       <tr>
+//           <td id="nameTd">${mainData.user.name}</td>
+//           <td id="emailTd">${mainData.user.email}</td>
+//           <td id="ageTd">${mainData.user.age}</td>
+//           <td id="cityTd">${mainData.user.city}</td>
+//           <td id="pinTd">${mainData.user.pin}</td>
+//       </tr>
+//   </table> <button class="btn2" id="edit">Edit</button>`;
+//     } else {
+//       alert(mainData.message);
+//     }
+//   });
+// }
 
-  //   const mainData = await recieveData.json();
-  //   if (mainData.success) {
-  //     alert(mainData.message);
-  //     data.innerHTML = `<table>
-  //     <tr>
-  //         <th>Name</th>
-  //         <th>Email</th>
-  //         <th>Age</th>
-  //         <th>City</th>
-  //         <th>Pin</th>
-  //     </tr>
-  //     <tr>
-  //         <td id="nameTd">${mainData.user.name}</td>
-  //         <td id="emailTd">${mainData.user.email}</td>
-  //         <td id="ageTd">${mainData.user.age}</td>
-  //         <td id="cityTd">${mainData.user.city}</td>
-  //         <td id="pinTd">${mainData.user.pin}</td>
-  //     </tr>
-  // </table> <button class="btn2" id="edit">Edit</button>`;
-  //   } else {
-  //     alert(mainData.message);
-  //   }
-  });
-}
+const form = document.getElementById("updateForm");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault(); // prevent the default form submission behavior
+
+  const formData = new FormData(form); // create a new FormData object from the form data
+
+  fetch("/user/me", {
+    method: "PUT",
+    body: formData,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
