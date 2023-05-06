@@ -174,6 +174,7 @@ window.onload = async () => {
 
     const data = await responce.json();
     if (data.success) {
+      alert(data.success)
       document.getElementById("update-div").innerHTML = `<form id="updateForm">
       <h1>Update</h1>
       <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
