@@ -127,7 +127,7 @@ const button = document.getElementsByClassName("loginButton");
 const dataDiv = document.getElementById("data-div");
 window.onload = async () => {
   const logoutButton = document.createElement("button");
-  logoutButton.id = "#logoutButton";
+  logoutButton.id = "logoutButton";
   logoutButton.className = "btn2";
   logoutButton.textContent = "Logout";
 

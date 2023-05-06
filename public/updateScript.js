@@ -15,7 +15,7 @@ window.onload = async () => {
     });
 
     const logoutButton = document.createElement("button");
-    logoutButton.id = "#logoutButton";
+    logoutButton.id = "logoutButton";
     logoutButton.className = "btn2";
     logoutButton.textContent = "Logout";
     document.querySelector("#buttonSpan").append(logoutButton);
@@ -67,4 +67,30 @@ window.onload = async () => {
       }
     });
   }
+
+  if (document.getElementById("logoutButton") !== null) {
+    document.getElementById("logoutButton") .addEventListener("click", async (e) => {
+      e.preventDefault();
+      const options = {
+        method: "GET",
+        "Content-Type": "Authorization",
+        credentials: "include",
+      };
+
+      const data = await fetch("/user/logout", options);
+
+      const mainData = await data.json();
+      console.log(mainData);
+
+      if (mainData.success) {
+        alert(mainData.message);
+        Array.from(button).forEach((e) => {
+          e.classList.remove("display-none");
+        });
+        e.target.classList.add("display-none");
+        window.location.href = "/"
+      }
+    });
+  }
+
 };
