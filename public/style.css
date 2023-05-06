@@ -200,7 +200,7 @@ a.active {
   border-bottom: 3px solid grey;
 }
 
-.loginContainer {
+.loginContainer,#update-div {
   /* height: 100vh; */
   display: flex;
   justify-content: center;
