@@ -25,7 +25,6 @@ window.onload = async () => {
     document.getElementById("update-div").innerHTML = `<form id="updateForm">
     <h1>Update</h1>
     <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
-    <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${data.data.email}>
     <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
     <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.city}>
     <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
