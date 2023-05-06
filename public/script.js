@@ -236,50 +236,51 @@ window.onload = async () => {
 
 let updateButton = document.getElementById("updateButton");
 if (updateButton !== null) {
-  updateButton.addEventListener("click", async () => {
+  updateButton.addEventListener("click", async (e) => {
+    e.preventDefault();
     alert("the update button clicked")
-    const data = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      age: document.getElementById("age").value,
-      city: document.getElementById("city").value,
-      pin: document.getElementById("pin").value,
-    };
+  //   const data = {
+  //     name: document.getElementById("name").value,
+  //     email: document.getElementById("email").value,
+  //     age: document.getElementById("age").value,
+  //     city: document.getElementById("city").value,
+  //     pin: document.getElementById("pin").value,
+  //   };
 
-    const jsonData = JSON.stringify(data);
+  //   const jsonData = JSON.stringify(data);
 
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: jsonData,
-    };
+  //   const options = {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "include",
+  //     body: jsonData,
+  //   };
 
-    const recieveData = await fetch("/user/me", options);
+  //   const recieveData = await fetch("/user/me", options);
 
-    const mainData = await recieveData.json();
-    if (mainData.success) {
-      alert(mainData.message);
-      data.innerHTML = `<table>
-      <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Age</th>
-          <th>City</th>
-          <th>Pin</th>
-      </tr>
-      <tr>
-          <td id="nameTd">${mainData.user.name}</td>
-          <td id="emailTd">${mainData.user.email}</td>
-          <td id="ageTd">${mainData.user.age}</td>
-          <td id="cityTd">${mainData.user.city}</td>
-          <td id="pinTd">${mainData.user.pin}</td>
-      </tr>
-  </table> <button class="btn2" id="edit">Edit</button>`;
-    } else {
-      alert(mainData.message);
-    }
+  //   const mainData = await recieveData.json();
+  //   if (mainData.success) {
+  //     alert(mainData.message);
+  //     data.innerHTML = `<table>
+  //     <tr>
+  //         <th>Name</th>
+  //         <th>Email</th>
+  //         <th>Age</th>
+  //         <th>City</th>
+  //         <th>Pin</th>
+  //     </tr>
+  //     <tr>
+  //         <td id="nameTd">${mainData.user.name}</td>
+  //         <td id="emailTd">${mainData.user.email}</td>
+  //         <td id="ageTd">${mainData.user.age}</td>
+  //         <td id="cityTd">${mainData.user.city}</td>
+  //         <td id="pinTd">${mainData.user.pin}</td>
+  //     </tr>
+  // </table> <button class="btn2" id="edit">Edit</button>`;
+  //   } else {
+  //     alert(mainData.message);
+  //   }
   });
 }
