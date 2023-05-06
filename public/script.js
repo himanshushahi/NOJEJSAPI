@@ -163,30 +163,6 @@ window.onload = async () => {
 </table> <a class="btn2" id="edit" href="/update">Edit</a>`;
   }
 
-  window.onload = async() =>{
-    const options = {
-      method: "GET",
-      "Content-Type": "Authorization",
-      credentials: "include",
-    };
-
-    const responce = await fetch("/user/me", options);
-
-    const data = await responce.json();
-    if (data.success) {
-      alert(data.success)
-      document.getElementById("update-div").innerHTML = `<form id="updateForm">
-      <h1>Update</h1>
-      <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
-      <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${data.data.email}>
-      <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
-      <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.city}>
-      <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
-      <button type="submit" id="updateForm" class="btn">Update</button>
-  </form>`;
-    }
-  }
-
   if (logoutButton !== null) {
     logoutButton.addEventListener("click", async (e) => {
       e.preventDefault();
@@ -230,39 +206,62 @@ window.onload = async () => {
 //   reader.readAsDataURL(file);
 // });
 
-let updateForm = document.getElementById("updateForm");
-if (updateForm !== null) {
-  updateForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      age: document.getElementById("age").value,
-      city: document.getElementById("city").value,
-      pin: document.getElementById("pin").value,
-    };
+window.onload = async () => {
+  const options = {
+    method: "GET",
+    "Content-Type": "Authorization",
+    credentials: "include",
+  };
 
-    const jsonData = JSON.stringify(data);
+  const responce = await fetch("/user/me", options);
 
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: jsonData,
-    };
+  const data = await responce.json();
+  if (data.success) {
+    alert(data.success);
+    document.getElementById("update-div").innerHTML = `<form id="updateForm">
+    <h1>Update</h1>
+    <input type="text" name="name" id="name" placeholder="Enter Your Name" value=${data.data.name}>
+    <input type="email" name="email" id="email" placeholder="Enter Your Email" value=${data.data.email}>
+    <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
+    <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.city}>
+    <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
+    <button type="submit" id="updateForm" class="btn">Update</button>
+</form>`;
+  }
 
-    const recieveData = await fetch("/user/me", options);
+  
+  let updateForm = document.getElementById("updateForm");
+  if (updateForm !== null) {
+    updateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        age: document.getElementById("age").value,
+        city: document.getElementById("city").value,
+        pin: document.getElementById("pin").value,
+      };
 
-    const mainData = await recieveData.json();
-    if (mainData.success) {
-      alert(mainData.message)
-       window.location.href = "/";
-    } else {
-      alert(mainData.message);
-    }
-  });
-}
+      const jsonData = JSON.stringify(data);
 
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: jsonData,
+      };
 
+      const recieveData = await fetch("/user/me", options);
+
+      const mainData = await recieveData.json();
+      if (mainData.success) {
+        alert(mainData.message);
+        window.location.href = "/";
+      } else {
+        alert(mainData.message);
+      }
+    });
+  }
+};
