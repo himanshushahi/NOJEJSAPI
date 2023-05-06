@@ -117,6 +117,8 @@ if (loginForm !== null) {
     if (mainData.success) {
       alert(mainData.message);
       window.location.href = "index.html";
+    }else{
+      alert(mainData.message);
     }
   });
 }
