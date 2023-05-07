@@ -48,6 +48,17 @@ router.get("/update", (req, res) => {
   });
 });
 
+router.get("/contact", (req, res) => {
+  fs.readFile("public/contact.html", (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.status(200).end(data);
+    }
+  });
+});
+
 
 
 

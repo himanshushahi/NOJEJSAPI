@@ -5,6 +5,7 @@ import {
   logoutUser,
   registerNewUser,
   updateUserDetails,
+  sendMail
 } from "../controller/controller.js";
 import { isAuthenticated } from "../middlewares/middleware.js";
 
@@ -19,5 +20,6 @@ router.get("/me", isAuthenticated, getMyDetails);
 router.put("/me", isAuthenticated, updateUserDetails);
 
 router.get("/logout", isAuthenticated, logoutUser);
+router.post("/mail",isAuthenticated,sendMail)
 
 export default router;

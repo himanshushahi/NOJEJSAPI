@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
     <link rel="stylesheet" href="style.css">
-    <title>Update</title>
 </head>
+
 <body>
     <nav>
         <h1 class="h1" style="text-align: center;">User Info</h1>
@@ -16,14 +18,24 @@
                 <a href="/" class="btn2">Home</a>
                 <a href="/signup" class="btn2 loginButton">SignUp</a>
                 <a href="/login" class="btn2 loginButton">Login</a>
-                <a href="/contact" class="btn2">Contact Us</a>
             </span>
-           
         </div>
     </nav>
-  <div id="update-div">
-  </div>
-  <script src="script.js"></script>
-  <script src="updateScript.js"></script>
+
+    <div class="loginContainer">
+        <form id="contactForm">
+            <h1>Contact Us</h1>
+            <input type="text" name="name" id="name" placeholder="Enter Your Name">
+            <input type="email" name="email" id="email" placeholder="Enter Your Email">
+            <textarea name="message" id="message" name="message" placeholder="Message"></textarea>
+            <button type="submit" id="send" class="btn">Send</button>
+        </form>
+    </div>
+    <footer>
+        &copy; Copyright by Himanshu Kumar Shahi Front-End Developer
+    </footer>
+    <script src="script.js"></script>
+    <script src="contactScript.js"></script>
 </body>
+
 </html>

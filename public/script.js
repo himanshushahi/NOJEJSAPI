@@ -145,6 +145,8 @@ window.onload = async () => {
       e.classList.add("display-none");
     });
 
+    document.querySelector(".contactUs").classList.remove("display-none");
+
     document.querySelector("#buttonSpan").append(logoutButton);
     document.querySelector(".userName").textContent =
       "Welcome " + data.data.name;

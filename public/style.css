@@ -214,10 +214,9 @@ a.active {
 
 #Registerform,
 #loginform,
-#updateForm {
+#updateForm,#contactForm {
   display: flex;
   flex-direction: column;
-  /* height: %; */
   padding: 20px 0px;
   align-items: center;
   width: 80%;
@@ -225,6 +224,24 @@ a.active {
   gap: 40px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+textarea{
+  resize: none;
+  width: 40%;
+  height: 80px;
+  border: 1px solid #3273a8;
+  outline: none;
+  padding: 7px;
+  border-radius: 6px;
+  transition: all 300ms ease-in;
+  font-size: large;
+}
+
+textarea:focus{
+  border: none;
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
+
 
 #Registerform h1,
 #loginform h1 {
@@ -359,11 +376,11 @@ input:focus {
 
   #Registerform,
   #loginform,
-  #updateForm {
+  #updateForm,#contactForm {
     width: 95%;
   }
 
-  input {
+  input ,textarea{
     width: 95%;
   }
 

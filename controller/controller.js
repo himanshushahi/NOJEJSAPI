@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 const registerNewUser = async (req, res) => {
   const { name, email, password, age, city, pin } = req.body;
@@ -90,7 +91,7 @@ const getMyDetails = async (req, res) => {
   res.json({
     success: true,
     data,
-  })
+  });
 };
 
 const logoutUser = async (req, res) => {
@@ -115,7 +116,7 @@ const logoutUser = async (req, res) => {
 const updateUserDetails = async (req, res) => {
   try {
     const { _email } = req.cookies;
-    const { name , age, city, pin } = req.body;
+    const { name, age, city, pin } = req.body;
     const user = await User.findOneAndUpdate(
       { email: _email },
       {
@@ -141,10 +142,42 @@ const updateUserDetails = async (req, res) => {
   }
 };
 
+const sendMail = (req, res) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "himanshushahi0478@gmail.com",
+      pass: process.env.MY_PASSWORD,
+    },
+  });
+
+  let mailOptions = {
+    from: req.body.email,
+    to: 'himanshushahi0478@gmail.com',
+    subject: 'New Form Submission From Site',
+    text: `Name: ${req.body.name}\nMessage: ${req.body.message}`
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+      res.status(500).json({
+        success:false,
+        message: "Internal Server Error Please Try After Some Time"
+      })
+  } else {
+      res.status(200).json({
+        success:true,
+        message:`The Message Is Sent Successfully`
+      })
+  }
+});
+};
+
 export {
   registerNewUser,
   loginUser,
   getMyDetails,
   logoutUser,
   updateUserDetails,
+  sendMail,
 };
