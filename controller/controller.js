@@ -142,6 +142,7 @@ const updateUserDetails = async (req, res) => {
   }
 };
 
+
 const sendMail = (req, res) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -155,23 +156,24 @@ const sendMail = (req, res) => {
     from: req.body.email,
     to: 'himanshushahi0478@gmail.com',
     subject: 'New Form Submission From Site',
-    text: `Name: ${req.body.name}\nMessage: ${req.body.message}`
-};
+    text: `Name: ${req.body.name}\n<Message: ${req.body.message}`
+  };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
       res.status(500).json({
         success:false,
         message: "Internal Server Error Please Try After Some Time"
       })
-  } else {
+    } else {
       res.status(200).json({
         success:true,
         message:`The Message Is Sent Successfully`
       })
-  }
-});
+    }
+  });
 };
+
 
 export {
   registerNewUser,

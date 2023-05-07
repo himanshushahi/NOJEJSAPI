@@ -28,7 +28,7 @@ window.onload = async () => {
     <input type="number" name="age" id="age" placeholder="Enter Your Age" value=${data.data.age}>
     <input type="text" name="city" id="city" placeholder="Enter Your City" value=${data.data.city}>
     <input type="number" name="pin" id="pin" placeholder="Enter Area Pin Code" value=${data.data.pin}>
-    <button type="submit" id="updateForm" class="btn">Update</button>
+    <button type="submit" class="btn">Update</button>
 </form>`;
   }
 
