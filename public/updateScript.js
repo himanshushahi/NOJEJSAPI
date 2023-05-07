@@ -20,7 +20,7 @@ window.onload = async () => {
     logoutButton.textContent = "Logout";
     document.querySelector("#buttonSpan").append(logoutButton);
 
-    document.querySelector(".userName").textContent = data.data.name;
+    document.querySelector(".userName").textContent ="Welcome " + data.data.name;
 
     document.getElementById("update-div").innerHTML = `<form id="updateForm">
     <h1>Update</h1>
@@ -38,7 +38,6 @@ window.onload = async () => {
       e.preventDefault();
       const data = {
         name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
         age: document.getElementById("age").value,
         city: document.getElementById("city").value,
         pin: document.getElementById("pin").value,

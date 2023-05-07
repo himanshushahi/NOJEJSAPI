@@ -19,7 +19,7 @@ window.onload = async () => {
     logoutButton.textContent = "Logout";
     document.querySelector("#buttonSpan").append(logoutButton);
 
-    document.querySelector(".userName").textContent = data.data.name;
+    document.querySelector(".userName").textContent = "Welcome " + data.data.name;
 
     document.getElementById("name").value = data.data.name;
     document.getElementById("email").value = data.data.email;
