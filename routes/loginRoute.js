@@ -5,9 +5,12 @@ import {
   logoutUser,
   registerNewUser,
   updateUserDetails,
-  sendMail
+  sendMail,
+  verifyOtp,
+  sendOpt,
+  updatePassword
 } from "../controller/controller.js";
-import { isAuthenticated } from "../middlewares/middleware.js";
+import { isAuthenticated} from "../middlewares/middleware.js";
 
 const router = express.Router();
 
@@ -20,6 +23,9 @@ router.get("/me", isAuthenticated, getMyDetails);
 router.put("/me", isAuthenticated, updateUserDetails);
 
 router.get("/logout", isAuthenticated, logoutUser);
-router.post("/mail",isAuthenticated,sendMail)
+router.post("/mail",isAuthenticated,sendMail);
+router.post("/forget",sendOpt);
+router.post("/verify",verifyOtp);
+router.post("/update",updatePassword)
 
 export default router;

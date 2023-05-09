@@ -87,30 +87,45 @@ const loginUser = async (req, res) => {
 
 const getMyDetails = async (req, res) => {
   const { _email } = req.cookies;
-  const data = await User.findOne({ email: _email });
-  res.json({
-    success: true,
-    data,
-  });
+  try {
+    const data = await User.findOne({ email: _email });
+    res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success:false,
+      message:"There is some problem in server"
+    })
+  }
 };
 
 const logoutUser = async (req, res) => {
   const { _email } = req.cookies;
-  if (!_email) {
-    return res.json({
-      success: false,
-      message: "Login First",
-    });
-  } else {
-    res
-      .cookie("_email", "", {
-        expires: new Date(Date.now()),
-      })
-      .json({
-        success: true,
-        message: "Logout Successfully",
+  try {
+    if (!_email) {
+      return res.json({
+        success: false,
+        message: "Login First",
       });
+    } else {
+      res
+        .cookie("_email", "", {
+          expires: new Date(Date.now()),
+        })
+        .json({
+          success: true,
+          message: "Logout Successfully",
+        });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success:false,
+      message:"We Could't Logout"
+    })
   }
+  
 };
 
 const updateUserDetails = async (req, res) => {
@@ -142,8 +157,8 @@ const updateUserDetails = async (req, res) => {
   }
 };
 
-
 const sendMail = (req, res) => {
+ try {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -154,26 +169,174 @@ const sendMail = (req, res) => {
 
   let mailOptions = {
     from: req.body.email,
-    to: 'himanshushahi0478@gmail.com',
-    subject: 'New Form Submission From Site',
-    text: `Name: ${req.body.name}\n<Message: ${req.body.message}`
+    to: "himanshushahi0478@gmail.com",
+    subject: "New Form Submission From Site",
+    text: `Name: ${req.body.name}\nMessage: ${req.body.message}\nEmail:${req.body.email}`,
   };
 
-  transporter.sendMail(mailOptions, function(error, info){
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      res.status(500).json({
-        success:false,
-        message: "Internal Server Error Please Try After Some Time"
-      })
+      res.status(400).json({
+        success: false,
+        message: "Internal Server Error Please Try After Some Time",
+      });
     } else {
       res.status(200).json({
-        success:true,
-        message:`The Message Is Sent Successfully`
-      })
+        success: true,
+        message: `The Message Is Sent Successfully`,
+      });
     }
   });
+ } catch (error) {
+  res.status(500).json({
+    success:false,
+    message:"Internal Server Error Please Try After Some Time",
+  })
+ }
 };
 
+const sendOpt = async (req, res, next) => {
+  const { email } = req.body;
+
+  // Validate email format
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid email address format",
+    });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "The email is not registered",
+    });
+  } else {
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "himanshushahi0478@gmail.com",
+        pass: process.env.MY_PASSWORD,
+      },
+    });
+
+    const number = "0123456789";
+    let otp = "";
+
+    for (let i = 0; i < 5; i++) {
+      const randomNum = Math.floor(Math.random() * number.length);
+      otp += number.charAt(randomNum);
+    }
+
+    const savedUser = await User.findOneAndUpdate(
+      { email },
+      { otp },
+      { new: true }
+    );
+
+    res.cookie("email_", email, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      sameSite: "strict",
+      secure: true,
+    });
+
+    let mailOptions = {
+      from: "himanshushahi0478@gmail.com",
+      to: email,
+      subject: "Forget Password",
+      text: `The OTP is ${otp} for resetting the password`,
+    };
+
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      res.status(200).json({
+        success: true,
+        message: `The OTP has been sent successfully`,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error, please try again later",
+      });
+    }
+  }
+};
+
+const verifyOtp = async (req, res) => {
+  const { email_ } = req.cookies;
+  const { otp } = req.body;
+
+  const user = await User.findOne({ email: email_ });
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "Email Not found",
+    });
+  } else {
+    if (user.otp == 404) {
+      return res.status(400).json({
+        success: false,
+        message: "The opt doesn't match",
+      });
+    } else if (user.otp == otp) {
+      res.status(200).json({
+        success: true,
+        message: "The otp Match Successfully",
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "The opt doesn't match",
+      });
+    }
+    setTimeout(async () => {
+      await User.findOneAndUpdate(
+        { email: email_ },
+        {
+          otp: 404,
+        },
+        { new: true }
+      );
+    }, 1000 * 60);
+  }
+};
+
+const updatePassword = async (req, res) => {
+  const { email_ } = req.cookies;
+  const { password } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const passwordHash = await bcrypt.hash(password, salt);
+
+  try {
+    await User.findOneAndUpdate(
+      { email: email_ },
+      {
+        password: passwordHash,
+      },
+      { new: true }
+    );
+
+    res
+      .cookie("email_", "", {
+        expires: new Date(Date.now()),
+      })
+      .status(201)
+      .json({
+        success: true,
+        message: "Password Updated Successfully",
+      });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Bad Request",
+    });
+  }
+};
 
 export {
   registerNewUser,
@@ -182,4 +345,7 @@ export {
   logoutUser,
   updateUserDetails,
   sendMail,
+  sendOpt,
+  verifyOtp,
+  updatePassword,
 };

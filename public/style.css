@@ -214,14 +214,14 @@ a.active {
 
 #Registerform,
 #loginform,
-#updateForm,#contactForm {
+#updateForm,#contactForm,#forgetForm,#verifyForm,#updatePasswordForm {
   display: flex;
   flex-direction: column;
   padding: 20px 0px;
   align-items: center;
   width: 80%;
   justify-content: center;
-  gap: 40px;
+  gap: 25px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
