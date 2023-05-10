@@ -18,6 +18,40 @@ if (eye != undefined) {
   });
 }
 
+function showModal(success,location,addClass) {
+  if (success) {
+    document.getElementById("modalBackground").style.visibility = "visible";
+    document.getElementById("automatic").style.display = "block";
+    infoDiv.classList.add(addClass);
+    document.getElementById("modal").style.transform = "translateY(0%)";
+    let flag = 3;
+    setInterval(() => {
+      document.getElementById("timeSpan").innerText = flag;
+      flag--;
+    }, 1000);
+    setTimeout(() => {
+      window.location.href = location;
+    }, 4000);
+  } else {
+    document.getElementById("modalBackground").style.visibility = "visible";
+    infoDiv.classList.add(addClass);
+    document.getElementById("modal").style.transform = "translateY(0%)";
+    document.getElementById("automatic").style.display = "none";
+  }
+}
+
+function NoLoadModal(success,addClass){
+  if (success) {
+    document.getElementById("modalBackground").style.visibility = "visible";
+    infoDiv.classList.add(addClass);
+    document.getElementById("modal").style.transform = "translateY(0%)";
+  } else {
+    document.getElementById("modalBackground").style.visibility = "visible";
+    infoDiv.classList.add(addClass);
+    document.getElementById("modal").style.transform = "translateY(0%)";
+  }
+}
+
 const registerForm = document.getElementById("Registerform");
 
 if (registerForm !== null) {
@@ -58,37 +92,15 @@ if (registerForm !== null) {
     const mainData = await recieveData.json();
 
     infoDiv.innerText = mainData.message;
-    if (mainData.success) {
-      document.getElementById("modalBackground").style.visibility = "visible";
-      document.getElementById("automatic").style.display = "block";
-      infoDiv.classList.add("info");
-      document.getElementById("modal").style.transform = "translateY(0%)";
-      let flag = 3;
-      setInterval(() => {
-        document.getElementById("timeSpan").innerText = flag;
-        flag--;
-      }, 1000);
-
-      setTimeout(() => {
-        window.location.href = "login.html";
-      }, 4000);
-    } else {
-      document.getElementById("modalBackground").style.visibility = "visible";
-      infoDiv.classList.add("danger");
-      document.getElementById("modal").style.transform = "translateY(0%)";
-      document.getElementById("automatic").style.display = "none";
+    if(mainData.success){
+      showModal(mainData.success,"/login","success")
+    }else{
+      showModal(mainData.success,"/signup","danger")
     }
   });
 }
 
-let cross = document.getElementById("cross");
-if (cross !== null) {
-  cross.addEventListener("click", () => {
-    document.getElementById("modal").style.transform = "translateY(-100%)";
-    document.getElementById("modalBackground").style.visibility = "hidden";
-    infoDiv.removeAttribute("class");
-  });
-}
+
 
 let loginForm = document.getElementById("loginform");
 
@@ -114,11 +126,11 @@ if (loginForm !== null) {
     const recieveData = await fetch("/user/login", options);
 
     const mainData = await recieveData.json();
+    infoDiv.innerText = mainData.message;
     if (mainData.success) {
-      alert(mainData.message);
-      window.location.href = "index.html";
-    }else{
-      alert(mainData.message);
+     showModal(mainData.success,"/","success")
+    } else {
+      showModal(mainData.success,"/login","danger")
     }
   });
 }
@@ -126,6 +138,9 @@ if (loginForm !== null) {
 const button = document.getElementsByClassName("loginButton");
 const dataDiv = document.getElementById("data-div");
 window.onload = async () => {
+  dataDiv.innerHTML = `<div class="spinner-container">
+  <div class="spinner"></div>
+</div>    `;
   const logoutButton = document.createElement("button");
   logoutButton.id = "logoutButton";
   logoutButton.className = "btn2";
@@ -173,6 +188,8 @@ window.onload = async () => {
     </tr>
 
 </table> <a class="btn2" id="edit" href="/update">Edit</a>`;
+  }else{
+    dataDiv.innerHTML = "";
   }
 
   if (logoutButton !== null) {
@@ -187,20 +204,28 @@ window.onload = async () => {
       const data = await fetch("/user/logout", options);
 
       const mainData = await data.json();
-      console.log(mainData);
-
+      infoDiv.innerText = mainData.message;
       if (mainData.success) {
-        alert(mainData.message);
         Array.from(button).forEach((e) => {
           e.classList.remove("display-none");
         });
         e.target.classList.add("display-none");
-        location.reload();
+        showModal(mainData.success,"/","success")
+      }else{
+        showModal(mainData.success,"/","danger")
       }
     });
   }
 };
 
+let cross = document.getElementById("cross");
+if (cross !== null) {
+  cross.addEventListener("click", () => {
+    document.getElementById("modal").style.transform = "translateY(-100%)";
+    document.getElementById("modalBackground").style.visibility = "hidden";
+    infoDiv.removeAttribute("class");
+  });
+}
 // const imageInput = document.getElementById('imageInput');
 // const imagePreview = document.getElementById('imagePreview');
 

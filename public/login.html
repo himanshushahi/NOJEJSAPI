@@ -36,6 +36,17 @@
             <button type="submit" id="loginButton" class="btn">Login</button>
         </form>
       </div>
+      <div id="modalBackground"
+        style="background-color: rgba(0, 0, 0, 0.564); height: 125vh; width: 98.9vw; position: absolute; top: 0; visibility: hidden; display: flex; justify-content: center; align-items: center; ">
+
+        <div id="modal" style="transform: translateY(-100%); transition: all 300ms ease-in-out;">
+            <i class="fa-solid fa-xmark fa-2x" id="cross"
+                style="position: absolute; top: 5px; right: 5px; cursor: pointer;" id="cross"></i>
+            <div id="infoDiv">
+            </div>
+            <div id="automatic">Automatic redirect in <span id="timeSpan"></span> Sec</div>
+        </div>
+    </div>
       <script src="script.js"></script>
       <script src="https://kit.fontawesome.com/59913a166f.js" crossorigin="anonymous"></script>
 </body>

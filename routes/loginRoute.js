@@ -7,8 +7,8 @@ import {
   updateUserDetails,
   sendMail,
   verifyOtp,
-  sendOpt,
-  updatePassword
+  updatePassword,
+  sendOtp
 } from "../controller/controller.js";
 import { isAuthenticated} from "../middlewares/middleware.js";
 
@@ -24,7 +24,7 @@ router.put("/me", isAuthenticated, updateUserDetails);
 
 router.get("/logout", isAuthenticated, logoutUser);
 router.post("/mail",isAuthenticated,sendMail);
-router.post("/forget",sendOpt);
+router.post("/forget",sendOtp);
 router.post("/verify",verifyOtp);
 router.post("/update",updatePassword)
 

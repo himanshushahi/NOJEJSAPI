@@ -73,7 +73,7 @@ const loginUser = async (req, res) => {
     } else {
       res.status(401).json({
         success: false,
-        message: "incorrect password",
+        message: "Incorrect Password",
       });
     }
   } catch (error) {
@@ -96,7 +96,7 @@ const getMyDetails = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success:false,
-      message:"There is some problem in server"
+      message:"There Is Some Problem In The Server"
     })
   }
 };
@@ -152,7 +152,7 @@ const updateUserDetails = async (req, res) => {
   } catch (error) {
     res.json({
       success: false,
-      message: "Some error with updating the data",
+      message: "Some Error With Updating The Data",
     });
   }
 };
@@ -195,14 +195,14 @@ const sendMail = (req, res) => {
  }
 };
 
-const sendOpt = async (req, res, next) => {
+const sendOtp = async (req, res, next) => {
   const { email } = req.body;
 
   // Validate email format
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({
       success: false,
-      message: "Invalid email address format",
+      message: "Invalid Email Address Format",
     });
   }
 
@@ -211,7 +211,7 @@ const sendOpt = async (req, res, next) => {
   if (!user) {
     return res.status(404).json({
       success: false,
-      message: "The email is not registered",
+      message: "The Email Is Not Registered",
     });
   } else {
     let transporter = nodemailer.createTransport({
@@ -243,24 +243,25 @@ const sendOpt = async (req, res, next) => {
       secure: true,
     });
 
+
     let mailOptions = {
       from: "himanshushahi0478@gmail.com",
       to: email,
       subject: "Forget Password",
-      text: `The OTP is ${otp} for resetting the password`,
+      text: `The OTP Is ${otp} For Resetting The Password`,
     };
 
     try {
       const info = await transporter.sendMail(mailOptions);
       res.status(200).json({
         success: true,
-        message: `The OTP has been sent successfully`,
+        message: `The OTP Has Been Sent Successfully`,
       });
     } catch (error) {
       console.error(error);
       res.status(500).json({
         success: false,
-        message: "Internal server error, please try again later",
+        message: "Internal Server Error, Please Try Again Later",
       });
     }
   }
@@ -274,30 +275,30 @@ const verifyOtp = async (req, res) => {
   if (!user) {
     return res.status(404).json({
       success: false,
-      message: "Email Not found",
+      message: "Email Not Found",
     });
   } else {
     if (user.otp == 404) {
       return res.status(400).json({
         success: false,
-        message: "The opt doesn't match",
+        message: "The OTP doesn't match",
       });
     } else if (user.otp == otp) {
       res.status(200).json({
         success: true,
-        message: "The otp Match Successfully",
+        message: "The OTP Match Successfully",
       });
     } else {
       res.status(400).json({
         success: false,
-        message: "The opt doesn't match",
+        message: "The OTP doesn't match",
       });
     }
     setTimeout(async () => {
       await User.findOneAndUpdate(
         { email: email_ },
         {
-          otp: 404,
+          OTP: 404,
         },
         { new: true }
       );
@@ -345,7 +346,7 @@ export {
   logoutUser,
   updateUserDetails,
   sendMail,
-  sendOpt,
+  sendOtp,
   verifyOtp,
   updatePassword,
 };

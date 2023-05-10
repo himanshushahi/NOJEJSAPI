@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Update</title>
 </head>
+
 <body>
     <nav>
         <h1 class="h1" style="text-align: center;">User Info</h1>
@@ -18,12 +20,24 @@
                 <a href="/login" class="btn2 loginButton">Login</a>
                 <a href="/contact" class="btn2">Contact Us</a>
             </span>
-           
+
         </div>
     </nav>
-  <div id="update-div">
-  </div>
-  <script src="script.js"></script>
-  <script src="updateScript.js"></script>
+    <div id="update-div">
+    </div>
+    <div id="modalBackground"
+        style="background-color: rgba(0, 0, 0, 0.564); height: 125vh; width: 98.9vw; position: absolute; top: 0; visibility: hidden; display: flex; justify-content: center; align-items: center; ">
+
+        <div id="modal" style="transform: translateY(-100%); transition: all 300ms ease-in-out;">
+            <i class="fa-solid fa-xmark fa-2x" id="cross"
+                style="position: absolute; top: 5px; right: 5px; cursor: pointer;" id="cross"></i>
+            <div id="infoDiv">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="updateScript.js"></script>
+    <script src="https://kit.fontawesome.com/59913a166f.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

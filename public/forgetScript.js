@@ -1,5 +1,4 @@
 const forgetForm = document.getElementById("forgetForm");
-// if (forgetForm !== null) {
 forgetForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const body = JSON.stringify({
@@ -18,15 +17,17 @@ forgetForm.addEventListener("submit", async (e) => {
   const responce = await fetch("/user/forget", options);
 
   const data = await responce.json();
-
-  alert(data.message);
+  infoDiv.innerText = data.message;
   if (data.success) {
+    NoLoadModal(data.success, "success");
     document.querySelector(".loginContainer").innerHTML = `
         <form id="verifyForm">
             <h1>Verify</h1>
             <input type="Number" name="otp" id="opt" placeholder="Enter OTP We Sent On Your Email">
             <button type="submit" id="send" class="btn">Send</button>
         </form>`;
+  }else{
+    NoLoadModal(data.success, "danger");
   }
 
   const verifyForm = document.getElementById("verifyForm");
@@ -47,9 +48,10 @@ forgetForm.addEventListener("submit", async (e) => {
       };
 
       const responce = await fetch("/user/verify", options);
-      const mainData = await responce.json();
-      alert(mainData.message);
-      if (mainData.success) {
+      const data = await responce.json();
+      infoDiv.innerText = data.message;
+      if (data.success) {
+        NoLoadModal(data.success, "success");
         document.querySelector(".loginContainer").innerHTML = `
             <form id="updatePasswordForm">
                 <h1>Forgot password</h1>
@@ -58,6 +60,8 @@ forgetForm.addEventListener("submit", async (e) => {
                 <p id="info" style="color:red;"></p>
                 <button type="submit" id="send" class="btn">Create</button>
             </form>`;
+      }else{
+        NoLoadModal(data.success, "danger");
       }
 
       const updatePasswordForm = document.getElementById("updatePasswordForm");
@@ -83,11 +87,15 @@ forgetForm.addEventListener("submit", async (e) => {
 
             const responce = await fetch("user/update", options);
 
-            const mainData = await responce.json();
-
-            alert(mainData.message);
-            if (mainData.success) {
-              window.location.href = "/login";
+            const data = await responce.json();
+            infoDiv.innerText = data.message;
+            if (data.success) {
+              NoLoadModal(data.success ,"success");
+              setTimeout(()=>{
+                window.location.href = "/login";
+              },2000)
+            } else {
+              NoLoadModal(data.success, "danger");
             }
           } else {
             document.getElementById("info").textContent =
@@ -98,4 +106,25 @@ forgetForm.addEventListener("submit", async (e) => {
     });
   }
 });
+
+// function showModal(success, location, addClass) {
+//   if (success) {
+//     document.getElementById("modalBackground").style.visibility = "visible";
+//     document.getElementById("automatic").style.display = "block";
+//     infoDiv.classList.add(addClass);
+//     document.getElementById("modal").style.transform = "translateY(0%)";
+//     let flag = 2;
+//     setInterval(() => {
+//       document.getElementById("timeSpan").innerText = flag;
+//       flag--;
+//     }, 1000);
+//     setTimeout(() => {
+//       window.location.href = location;
+//     }, 3000);
+//   } else {
+//     document.getElementById("modalBackground").style.visibility = "visible";
+//     infoDiv.classList.add("danger");
+//     document.getElementById("modal").style.transform = "translateY(0%)";
+//     document.getElementById("automatic").style.display = "none";
+//   }
 // }

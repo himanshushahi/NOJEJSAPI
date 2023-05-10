@@ -1,5 +1,8 @@
 
 window.onload = async () => {
+  document.getElementById("update-div").innerHTML =`<div class="spinner-container">
+  <div class="spinner"></div>
+</div>    `;
   const options = {
     method: "GET",
     "Content-Type": "Authorization",
@@ -57,17 +60,16 @@ window.onload = async () => {
       const recieveData = await fetch("/user/me", options);
 
       const mainData = await recieveData.json();
+      infoDiv.innerText = mainData.message;
       if (mainData.success) {
-        alert(mainData.message);
-        window.location.href = "/";
+        NoLoadModal(mainData.success,"success")
       } else {
-        alert(mainData.message);
+        NoLoadModal(mainData.success,"danger")
       }
     });
   }
-
-  if (document.getElementById("logoutButton") !== null) {
-    document.getElementById("logoutButton") .addEventListener("click", async (e) => {
+  if (logoutButton !== null) {
+    logoutButton.addEventListener("click", async (e) => {
       e.preventDefault();
       const options = {
         method: "GET",
@@ -78,17 +80,19 @@ window.onload = async () => {
       const data = await fetch("/user/logout", options);
 
       const mainData = await data.json();
-      console.log(mainData);
-
+      infoDiv.innerText = mainData.message;
       if (mainData.success) {
-        alert(mainData.message);
         Array.from(button).forEach((e) => {
           e.classList.remove("display-none");
         });
         e.target.classList.add("display-none");
-        window.location.href = "/"
+        NoLoadModal(mainData.success,"success");
+       setTimeout(()=>{
+        window.location.href = "/";
+       },2000)
+      }else{
+        NoLoadModal(mainData.success,"danger")
       }
     });
   }
-
 };
